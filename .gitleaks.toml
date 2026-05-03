@@ -1,0 +1,67 @@
+title = "Travel Agents - Secret Scanner"
+
+[settings]
+description = "Gitleaks config for travel-agents project"
+
+[[allowlists]]
+description = "Allowlist for common false positives"
+path = '.gitleaks-allowlist.toml'
+
+[[rules]]
+id = "AWS_ACCESS_KEY_ID"
+description = "AWS Access Key ID pattern"
+tags = ["keys"]
+keywords = ["aws", "AKIA"]
+secret_group = "aws"
+
+[[rules]]
+id = "AWS_SECRET_ACCESS_KEY"
+description = "AWS Secret Access Key pattern"
+tags = ["keys"]
+keywords = []
+secret_group = "aws"
+
+[[rules]]
+id = "GCP_CREDENTIALS"
+description = "Google Cloud Platform credentials"
+tags = ["keys"]
+keywords = ["google", "GOOGLE", "ghp"]
+secret_group = "gcp"
+
+[[rules]]
+id = "AZURE_STORAGE_ACCOUNT_KEY"
+description = "Azure Storage Account Key"
+tags = ["keys"]
+keywords = ["azure", "StorageAccountKey"]
+secret_group = "azure"
+
+[[rules]]
+id = "Generic API Key"
+description = "Generic API key pattern in code"
+tags = ["generic", "keys"]
+keywords = ["api", "API"]
+secret_group = "generic"
+
+[[rules]]
+id = "Generic Secret Key"
+description = "Generic secret key pattern"
+tags = ["keys"]
+keywords = ["secret", "SECRET"]
+secret_group = "generic"
+
+[[rules]]
+id = "Generic Password"
+description = "Generic password pattern"
+tags = ["password", "credentials"]
+keywords = ["password", "PASSWORD"]
+secret_group = "generic"
+
+[[rules]]
+id = "Generic Token"
+description = "Generic token pattern"
+tags = ["tokens"]
+keywords = ["token", "TOKEN", "pk", "PK"]
+secret_group = "generic"
+
+[fix]
+mode = false
