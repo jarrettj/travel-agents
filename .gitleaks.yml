@@ -1,0 +1,132 @@
+title: Travel Agents - Secret Scanner
+
+# Common patterns to exclude (if needed)
+rules:
+  - id: generic-api-key
+    description: Generic API key pattern
+    # Pattern: https://regex101.com with some examples of what should be allowed
+    pattern: '(?i)(api[_]key|apikey)\\s*[=:]\s*["\']?[A-Za-z0-9+/=]{20,}'
+    # List of matches that should be ignored, or set to * to ignore everything
+    tags: []
+    # By default, gitleaks will return a false positive warning
+    # If you want this to pass, set _ _whole_match_ _or one of the patterns to ""
+    keywords: []
+    metadata:
+      identifier: 'https://github.com/zricethezav/gitleaks'
+      start_position:
+        line: 0
+        column: 0
+      end_position:
+        line: 0
+        column: 0
+      rule_id: generic-api-key
+
+# Rules to ignore (built-in rules from gitleaks)
+# These are typically false positives for common patterns
+rules:
+  - id: AWS_ACCESS_KEY_ID
+    description: AWS Access Key ID pattern - often false positive in code comments
+    tags: ['keyids']
+    keywords: []
+    pattern: 'AKIA[0-9A-Z]{16}'
+    # Ignore this rule - it's a false positive
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: AWS_SECRET_ACCESS_KEY
+    description: AWS Secret Access Key pattern - often false positive in code comments
+    tags: ['keys']
+    keywords: []
+    pattern: '[A-Za-z0-9/+=]{40}'
+    # Ignore this rule - it's a false positive
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: GENERIC_SECRET_KEY
+    description: Generic secret key pattern - often false positive in environment variable references
+    tags: ['keys']
+    keywords: []
+    pattern: 'SECRET\\s*[=:]\s*["\']?[A-Za-z0-9+/=]{16,}'
+    # Ignore this rule - it's a false positive in config templates
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: OPENAI_API_KEY
+    description: OpenAI API Key pattern
+    tags: ['keys']
+    keywords: []
+    pattern: 'sk-[a-zA-Z0-9]{32,}'
+    # DO NOT ignore this - it's a real secret
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: stripe-api-key
+    description: Stripe API Key pattern
+    tags: ['keys']
+    keywords: []
+    pattern: 'sk_(test|live)_[a-zA-Z0-9]{20,}'
+    # DO NOT ignore this - it's a real secret
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+# Custom rules for travel-specific patterns
+rules:
+  - id: SKYSCANNER_API_KEY
+    description: Skyscanner API Key pattern
+    tags: ['travel-apis']
+    keywords: []
+    pattern: '[a-zA-Z0-9]{32,64}'
+    # Skyscanner keys are alphanumeric and vary in length
+    # Add specific exclusions if needed
+    exclude_desc: 'False positive if it matches a known good value'
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: BOOKINGCOM_API_KEY
+    description: Booking.com API Key pattern
+    tags: ['travel-apis']
+    keywords: []
+    pattern: '[a-zA-Z0-9]{20,40}'
+    # Booking.com keys vary in length
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: REDIS_PASSWORD
+    description: Redis password pattern
+    tags: ['database']
+    keywords: []
+    pattern: '[a-zA-Z0-9_]{12,}'
+    # Generic redis password pattern
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: DATABASE_URL
+    description: Database connection string pattern
+    tags: ['database']
+    keywords: []
+    pattern: 'mysql|postgres|mongodb|redis://'
+    # Database connection strings should be checked
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+  - id: GITHUB_TOKEN
+    description: GitHub Personal Access Token pattern
+    tags: ['authentication']
+    keywords: []
+    pattern: 'ghp_[a-zA-Z0-9]{36}'
+    # DO NOT ignore this - it's a real secret
+    _ _whole_match_ _or one of the patterns_ == ''
+    suggestions: []
+
+# Exclude common false positives
+exclude_paths:
+  - 'node_modules'
+  - 'vendor'
+  - '**/test/**'
+  - '**/tests/**'
+  - '.git'
+
+# Environment variable exclusions
+env_vars:
+  - GITHUB_TOKEN
+  - GITHUB_PAT
