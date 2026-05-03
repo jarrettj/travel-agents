@@ -1,0 +1,90 @@
+{
+  "workflow": {
+    "name": "Travel Platform Development",
+    "mode": "sequential",
+    "handoffStrategy": "checkpoint",
+    "timeoutPerAgent": 600,  // 10 minutes
+    "pollInterval": 10  // seconds
+  },
+  "agents": [
+    {
+      "id": "researcher",
+      "displayName": "Research Agent",
+      "role": "researcher",
+      "specialty": "Travel Market Analysis",
+      "mission": "Investigate destinations, competition, pricing trends",
+      "model": "anthropic/claude-sonnet-4",
+      "skills": ["web_search", "curl", "data_analysis", "knowledge_base"],
+      "task": "Research top 10 emerging travel destinations for 2026",
+      "handoffsTo": ["designer"],
+      "expectsInput": false,
+      "expectsCheckpoint": true
+    },
+    {
+      "id": "designer",
+      "displayName": "Design Agent",
+      "role": "designer",
+      "specialty": "UI/UX Design",
+      "mission": "Create wireframes, mockups, user flows for travel platform",
+      "model": "anthropic/claude-sonnet-4",
+      "skills": ["sketch", "design-md", "knowledge_base"],
+      "task": "Design UI and user flows based on research findings",
+      "handoffsTo": ["developer"],
+      "expectsInput": {
+        "type": "research_findings",
+        "requiredFields": ["destinations", "competitors", "key_features"]
+      },
+      "expectsCheckpoint": true
+    },
+    {
+      "id": "developer",
+      "displayName": "Developer Agent",
+      "role": "developer",
+      "specialty": "Full-stack Development",
+      "mission": "Build the travel agency platform",
+      "model": "anthropic/claude-sonnet-4",
+      "skills": ["code_generation", "api_integration", "database_design", "knowledge_base"],
+      "task": "Develop the travel agency platform based on designs",
+      "handoffsTo": ["reviewer"],
+      "expectsInput": {
+        "type": "design_specs",
+        "requiredFields": ["wireframes", "user_flows", "component_specs"]
+      },
+      "expectsCheckpoint": true
+    },
+    {
+      "id": "reviewer",
+      "displayName": "QA Reviewer",
+      "role": "reviewer",
+      "specialty": "QA and Testing",
+      "mission": "Review and approve the travel platform before deployment",
+      "model": "anthropic/claude-sonnet-4",
+      "skills": ["testing", "code_review", "api_testing", "knowledge_base"],
+      "task": "Review the platform, test all features, approve or request fixes",
+      "handoffsTo": ["deployer"],
+      "expectsInput": {
+        "type": "platform_build",
+        "requiredFields": ["code", "deployment_config", "test_results"]
+      },
+      "expectsCheckpoint": true,
+      "approvalRequired": true
+    },
+    {
+      "id": "deployer",
+      "displayName": "Deployer Agent",
+      "role": "deployer",
+      "specialty": "Deployment and Operations",
+      "mission": "Deploy the approved platform",
+      "model": "anthropic/claude-sonnet-4",
+      "skills": ["deployment", "infrastructure", "knowledge_base"],
+      "task": "Deploy the platform to staging and production",
+      "handoffsTo": null,
+      "expectsInput": {
+        "type": "approval",
+        "requiredFields": ["test_results", "quality_check"]
+      },
+      "expectsCheckpoint": true,
+      "approvalRequired": true
+    }
+  ]
+}
