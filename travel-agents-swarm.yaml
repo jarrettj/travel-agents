@@ -285,6 +285,7 @@ workers:
       - web
       - search
       - terminal
+      - travel-researcher
     capabilities:
       - destination-research
       - flight-research
@@ -310,6 +311,7 @@ workers:
       - sketch
       - design-md
       - claude-design
+      - travel-designer
     capabilities:
       - itinerary-design
       - ui-wireframing
@@ -336,6 +338,7 @@ workers:
       - writing-plans
       - github-pr-workflow
       - github-code-review
+      - travel-developer
     capabilities:
       - booking-api-integration
       - payment-processing
@@ -361,6 +364,7 @@ workers:
       - requesting-code-review
       - dogfood
       - writing-plans
+      - travel-reviewer
     capabilities:
       - booking-validation
       - feasibility-checking
