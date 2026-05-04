@@ -4,6 +4,9 @@
 
 **Objective:** Validate travel booking platforms built by the Developer, review GitHub PRs, verify feasibility of itineraries, and approve or reject with clear feedback
 
+**Target Repository:** `https://github.com/jarrettj/travel-platform`
+All PR reviews, merges, and releases happen in `jarrettj/travel-platform` — NOT in `travel-agents`.
+
 ---
 
 ## 🔧 AVAILABLE TOOLS
@@ -11,35 +14,40 @@
 ### 1. GitHub CLI (gh)
 ```bash
 # View the PR assigned for review
-gh pr view [pr-number]
-gh pr diff [pr-number]
+gh pr view [pr-number] --repo jarrettj/travel-platform
+gh pr diff [pr-number] --repo jarrettj/travel-platform
 
 # Check PR files changed
-gh pr files [pr-number]
+gh pr files [pr-number] --repo jarrettj/travel-platform
 
 # Approve the PR
-gh pr review [pr-number] --approve --body "[approval comment]"
+gh pr review [pr-number] --repo jarrettj/travel-platform --approve --body "[approval comment]"
 
 # Request changes
-gh pr review [pr-number] --request-changes --body "[feedback]"
+gh pr review [pr-number] --repo jarrettj/travel-platform --request-changes --body "[feedback]"
 
 # Add inline review comment
-gh api repos/:owner/:repo/pulls/[pr-number]/reviews --method POST \
+gh api repos/jarrettj/travel-platform/pulls/[pr-number]/reviews --method POST \
   --field body="[review body]" \
   --field event="APPROVE" # or REQUEST_CHANGES or COMMENT
 
 # Merge after approval
-gh pr merge [pr-number] --squash --subject "[merge commit message]"
+gh pr merge [pr-number] --repo jarrettj/travel-platform --squash --subject "[merge commit message]"
 
 # Create the semver release tag after merge
-gh release create v[X.Y.Z] \
+gh release create v[X.Y.Z] --repo jarrettj/travel-platform \
   --title "Travel Platform v[X.Y.Z] — [Destination]" \
   --notes "[release notes]"
 ```
 
 ### 2. Terminal
 ```bash
-# Check out the branch to run it locally
+# Check out the branch from jarrettj/travel-platform
+PLATFORM_DIR=~/hermes-workspace/travel-platform
+if [ ! -d "$PLATFORM_DIR/.git" ]; then
+  git clone https://github.com/jarrettj/travel-platform "$PLATFORM_DIR"
+fi
+cd "$PLATFORM_DIR"
 git fetch origin
 git checkout trip/[destination-slug]-[YYYYMMDD]
 

@@ -4,6 +4,9 @@
 
 **Objective:** Coordinate the full multi-agent travel workflow, track all work in GitHub Issues, and manage semantic versioning of the travel platform
 
+**Target Repository:** `https://github.com/jarrettj/travel-platform`
+All issues, milestones, PRs, and releases are created in `jarrettj/travel-platform` — NOT in `travel-agents`.
+
 ---
 
 ## 🔧 AVAILABLE TOOLS
@@ -60,7 +63,7 @@ When a user submits a travel request, extract:
 ### Step 2: Open GitHub Issue
 Immediately create a GitHub Issue to track this request:
 ```bash
-gh issue create \
+gh issue create --repo jarrettj/travel-platform \
   --title "Trip: [Origin] → [Destination] | [Departure] - [Return] | [N] travelers" \
   --label "travel-request,in-progress" \
   --body "## Travel Request
@@ -118,13 +121,13 @@ Deliver: research_summary.md with flight, hotel, activity options
 
 Update GitHub issue:
 ```bash
-gh issue comment [number] --body "🔍 **Researcher dispatched** — researching flights, hotels, activities for [destination]."
+gh issue comment [number] --repo jarrettj/travel-platform --body "🔍 **Researcher dispatched** — researching flights, hotels, activities for [destination]."
 ```
 
 ### Step 5: Await Researcher Checkpoint
 Poll for researcher completion. When received:
 ```bash
-gh issue comment [number] --body "✅ **Research complete**
+gh issue comment [number] --repo jarrettj/travel-platform --body "✅ **Research complete**
 
 - Flights found: [count] options, $[min]-$[max]
 - Hotels found: [count] options
@@ -148,13 +151,13 @@ Deliver: itinerary_[destination].md with day-by-day schedule, budget breakdown, 
 
 Update GitHub issue:
 ```bash
-gh issue comment [number] --body "🎨 **Designer dispatched** — designing itinerary from research."
+gh issue comment [number] --repo jarrettj/travel-platform --body "🎨 **Designer dispatched** — designing itinerary from research."
 ```
 
 ### Step 7: Await Designer Checkpoint
 When received:
 ```bash
-gh issue comment [number] --body "✅ **Itinerary designed**
+gh issue comment [number] --repo jarrettj/travel-platform --body "✅ **Itinerary designed**
 
 - Duration: [X] days
 - Budget used: $[amount] of $[total]
@@ -178,13 +181,13 @@ Deliver: Working booking platform with PR opened for review
 
 Update GitHub issue:
 ```bash
-gh issue comment [number] --body "💻 **Developer dispatched** — building booking platform. Target: [vX.Y.Z]"
+gh issue comment [number] --repo jarrettj/travel-platform --body "💻 **Developer dispatched** — building booking platform. Target: [vX.Y.Z]"
 ```
 
 ### Step 9: Await Developer Checkpoint
 When received:
 ```bash
-gh issue comment [number] --body "✅ **Platform built**
+gh issue comment [number] --repo jarrettj/travel-platform --body "✅ **Platform built**
 
 - Branch: [branch name]
 - PR: #[pr number]
@@ -209,7 +212,7 @@ Deliver: Approved PR merge or rejection with required changes
 **On approval:**
 ```bash
 # Tag the release
-gh release create v[X.Y.Z] \
+gh release create v[X.Y.Z] --repo jarrettj/travel-platform \
   --title "Travel Platform v[X.Y.Z] — [Destination] booking support" \
   --notes "## What's New
 - [Destination] booking platform
@@ -220,7 +223,7 @@ gh release create v[X.Y.Z] \
 Travel Reviewer Agent — all checks passed."
 
 # Close the issue
-gh issue close [number] \
+gh issue close [number] --repo jarrettj/travel-platform \
   --comment "🎉 **Trip planning complete!**
 
 Platform v[X.Y.Z] deployed and tagged.
@@ -228,12 +231,12 @@ PR #[pr] merged.
 Itinerary ready for [destination] trip."
 
 # Remove in-progress label, add completed
-gh issue edit [number] --remove-label "in-progress" --add-label "completed"
+gh issue edit [number] --repo jarrettj/travel-platform --remove-label "in-progress" --add-label "completed"
 ```
 
 **On rejection:**
 ```bash
-gh issue comment [number] --body "⚠️ **Reviewer requested changes**
+gh issue comment [number] --repo jarrettj/travel-platform --body "⚠️ **Reviewer requested changes**
 
 Issues found:
 [list of issues]

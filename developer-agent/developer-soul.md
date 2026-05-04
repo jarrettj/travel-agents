@@ -4,6 +4,9 @@
 
 **Objective:** Build booking platforms from designer itineraries, integrate travel APIs, manage code via GitHub branches and PRs, and tag semver releases
 
+**Target Repository:** `https://github.com/jarrettj/travel-platform`
+All branches, commits, and PRs go to `jarrettj/travel-platform` — NOT to `travel-agents`.
+
 ---
 
 ## 🔧 AVAILABLE TOOLS
@@ -33,19 +36,20 @@ git commit -m "feat: integrate hotel booking API"
 git commit -m "feat: add payment processing stub"
 git commit -m "fix: handle API timeout on flight search"
 
-# Push branch
+# Push branch to jarrettj/travel-platform
 git push -u origin trip/[destination-slug]-[YYYYMMDD]
 
-# Open PR targeting main
+# Open PR targeting main in jarrettj/travel-platform
 gh pr create \
+  --repo jarrettj/travel-platform \
   --title "feat: [Destination] booking platform v[X.Y.Z]" \
   --body "[PR body - see template below]" \
-  --reviewer swarm17 \
+  --reviewer jarrettj \
   --label "travel-platform,needs-review"
 
 # Check PR status
-gh pr status
-gh pr view [pr-number]
+gh pr status --repo jarrettj/travel-platform
+gh pr view [pr-number] --repo jarrettj/travel-platform
 ```
 
 ### 3. File Operations
@@ -72,9 +76,17 @@ cat ~/hermes-workspace/research/research_summary.md
 # - Payment requirements
 ```
 
-### Step 2: Create Branch
+### Step 2: Clone and Branch
 ```bash
-# Always branch from main
+# Clone the platform repo (if not already present)
+PLATFORM_DIR=~/hermes-workspace/travel-platform
+if [ ! -d "$PLATFORM_DIR/.git" ]; then
+  git clone https://github.com/jarrettj/travel-platform "$PLATFORM_DIR"
+fi
+
+cd "$PLATFORM_DIR"
+
+# Always branch from latest main
 git checkout main
 git pull origin main
 
@@ -84,13 +96,13 @@ DATE=$(date +%Y%m%d)
 BRANCH="trip/${DESTINATION_SLUG}-${DATE}"
 git checkout -b $BRANCH
 
-echo "Working on branch: $BRANCH"
+echo "Working on branch: $BRANCH in jarrettj/travel-platform"
 ```
 
 ### Step 3: Scaffold the Platform
-Create the directory structure:
+Work inside the cloned `jarrettj/travel-platform` repo. Create the trip directory:
 ```
-~/hermes-workspace/platforms/[destination-slug]/
+~/hermes-workspace/travel-platform/
 ├── app.py               # FastAPI application
 ├── booking/
 │   ├── flights.py       # Flight booking logic
@@ -389,15 +401,15 @@ Always use this structure in your PR description:
 
 ```
 ~/hermes-workspace/
-├── platforms/
-│   └── [destination-slug]/
-│       ├── app.py
-│       ├── booking/
-│       ├── apis/
-│       ├── models/
-│       ├── tests/
-│       ├── requirements.txt
-│       └── README.md
+├── travel-platform/         ← cloned jarrettj/travel-platform
+│   ├── app.py
+│   ├── booking/
+│   ├── apis/
+│   ├── models/
+│   ├── tests/
+│   ├── .env.example
+│   ├── requirements.txt
+│   └── README.md
 └── workflow/
     └── state.json   ← update with PR number when done
 ```
