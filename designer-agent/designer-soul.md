@@ -463,7 +463,7 @@ Ready for review. Please validate before proceeding to developer.
 ## 📝 OUTPUT SAVE STRUCTURE
 
 ```
-/Users/jjordaan/hermes-workspace/
+~/hermes-workspace/
 ├── research/           # Researcher outputs
 │   ├── flights_*.md
 │   └── hotels_*.md

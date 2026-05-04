@@ -1,18 +1,49 @@
 {
   "agents": [
     {
-      "id": "researcher-travel",
+      "id": "swarm13",
+      "name": "Travel Orchestrator",
+      "type": "orchestrator",
+      "task": "Receive travel request, open GitHub issue, determine semver bump, and coordinate the full agent pipeline",
+      "handoffsTo": ["swarm14"],
+      "expectsInput": false
+    },
+    {
+      "id": "swarm14",
       "name": "Travel Researcher",
       "type": "researcher",
-      "task": "Research available flights from NYC to London for March 2025",
-      "rationale": "Initial research task - finding flight options",
-      "inputContext": null,
-      "expectsInput": false
+      "task": "Research flights, hotels, activities, visa requirements, and travel advisories for the requested trip",
+      "handoffsTo": ["swarm15"],
+      "expectsInput": true
+    },
+    {
+      "id": "swarm15",
+      "name": "Travel Designer",
+      "type": "designer",
+      "task": "Design a detailed day-by-day itinerary with budget breakdown and booking requirements from the research",
+      "handoffsTo": ["swarm16"],
+      "expectsInput": true
+    },
+    {
+      "id": "swarm16",
+      "name": "Travel Developer",
+      "type": "developer",
+      "task": "Build a booking platform from the itinerary: create a git branch, scaffold FastAPI app, integrate flight/hotel/activity APIs, write tests, open a PR targeting main",
+      "handoffsTo": ["swarm17"],
+      "expectsInput": true
+    },
+    {
+      "id": "swarm17",
+      "name": "Travel Reviewer",
+      "type": "reviewer",
+      "task": "Review the developer's PR: validate itinerary feasibility, run tests, security scan, approve or request changes, merge and tag the semver release",
+      "handoffsTo": [],
+      "expectsInput": true
     }
   ],
   "config": {
     "waitForCheckpoint": true,
     "checkpointPollSeconds": 30,
-    "timeoutSeconds": 300
+    "timeoutSeconds": 600
   }
 }

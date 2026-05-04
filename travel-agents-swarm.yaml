@@ -264,15 +264,20 @@ workers:
       - writing-plans
       - requesting-code-review
       - delegate_task
+      - gh
+      - travel-orchestrator
     capabilities:
       - workflow-orchestration
       - task-routing
       - agent-coordination
       - handoff-management
+      - github-issue-tracking
+      - semver-management
     preferredTaskTypes:
       - workflow-coordination
       - multi-agent-tasking
       - booking-orchestration
+      - github-tracking
     maxConcurrentTasks: 1
     acceptsBroadcast: true
 
