@@ -1,0 +1,39 @@
+# Agent folder READMEs (duplicates of main README.md)
+*/agent*/README.md
+
+# Skill files (use hermes Agent dashboard for skills)
+*/skills/*.md
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Runtime
+*.backup
+*.backup.*
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Node modules
+node_modules/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
+
+# Travel-specific
+config.local
+*.local
+
+# Secrets
+secrets/
+keys/
+credentials/

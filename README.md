@@ -93,6 +93,26 @@ pnpm dev
 3. **Workflow Plans**: See `docs/workflows/` for task sequences
 4. **Progress Tracking**: Check `notes/` for work logs
 5. **Decisions**: See `docs/decisions.md` for major decisions
+6. **Skills**: Created under `skills/` for loading in Hermes Agent
+
+## Repository Updates (May 2026)
+
+### ✅ Cleanup Completed
+
+- **Removed duplicate README.md files** from each agent folder (`agent*/README.md`)
+- **Created proper .gitignore** to prevent future duplicates
+- **Consolidated documentation** in `docs/` directory
+
+**Why this matters:**
+- Agent-specific READMEs were identical duplicates (same 761 words)
+- Documentation should live in centralized `docs/agents/` folder
+- Cleaner repo structure for maintenance
+
+### ✅ New Skills Added
+
+- **`travel-agent-assistant`** - Domain-specific travel knowledge for LLM agents
+- Located: `skills/travel-agent-assistant/SKILL.md`
+- Loads automatically when agents need travel domain expertise
 
 ## Quick Links
 
