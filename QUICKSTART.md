@@ -2,6 +2,10 @@
 
 A multi-agent travel booking system using Hermes Workspace with 5 specialized agents working together.
 
+## Version
+
+**Current Version:** 1.0.0
+
 ## 📋 System Overview
 
 The travel agent system consists of 5 specialized agents working in sequence:

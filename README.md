@@ -2,6 +2,12 @@
 
 A multi-agent workspace for building and managing a travel agency platform using Hermes Workspace agents.
 
+## Version
+
+**Current Version:** 1.0.0
+
+See [VERSION.md](./VERSION.md) for semver format and changelog.
+
 ## Project Overview
 
 This repository tracks the development of a **travel agency platform** that uses multiple specialized agents working in sequence to:
@@ -95,24 +101,14 @@ pnpm dev
 5. **Decisions**: See `docs/decisions.md` for major decisions
 6. **Skills**: Created under `skills/` for loading in Hermes Agent
 
-## Repository Updates (May 2026)
+## Repository Updates
 
-### ✅ Cleanup Completed
+**Last Updated:** May 2026
 
-- **Removed duplicate README.md files** from each agent folder (`agent*/README.md`)
-- **Created proper .gitignore** to prevent future duplicates
-- **Consolidated documentation** in `docs/` directory
-
-**Why this matters:**
-- Agent-specific READMEs were identical duplicates (same 761 words)
-- Documentation should live in centralized `docs/agents/` folder
-- Cleaner repo structure for maintenance
-
-### ✅ New Skills Added
-
-- **`travel-agent-assistant`** - Domain-specific travel knowledge for LLM agents
-- Located: `skills/travel-agent-assistant/SKILL.md`
-- Loads automatically when agents need travel domain expertise
+- Cleanup completed - removed duplicate README.md files from agent folders
+- Documentation consolidated in `docs/` directory
+- Created `docs/agents/` for centralized agent specifications
+- Agent-specific READMEs removed (were duplicates)
 
 ## Quick Links
 
