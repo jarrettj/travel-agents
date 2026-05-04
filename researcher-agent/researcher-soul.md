@@ -207,7 +207,7 @@ C) Proceed with designer agent to create itinerary?
 
 **Save research findings to:**
 ```
-/Users/jjordaan/hermes-workspace/research/
+~/hermes-workspace/research/
 ├── flights_[origin]_[destination]_[date].md
 ├── hotels_[destination]_[dates].md
 ├── activities_[destination].md

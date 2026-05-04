@@ -91,52 +91,39 @@ def dispatch_agent(agent: dict, input_context: dict = None):
         return None
 
 def run_workflow(agents: list):
-    """Run agents sequentially, waiting for checkpoints."""
-    input_context = None
-    
+    """Run agents sequentially, passing each checkpoint as context to the next."""
+    last_checkpoint = None
+
     print("\n" + "="*60)
     print("Travel Agents Sequential Workflow")
     print("="*60)
-    
+
     for i, agent in enumerate(agents):
         agent_id = agent.get("id")
-        task = agent.get("task")
-        next_agent = agent.get("handoffsTo", [])
-        
-        # Prepare input context from previous agent's output
-        input_context = None
-        if i > 0 and "output" in locals() and agent.get("expectsInput"):
-            input_context = agent.get("expectsInput", {})
-        
-        # Dispatch the agent
+
+        # Pass previous agent's output forward only if this agent expects it
+        input_context = last_checkpoint if (i > 0 and agent.get("expectsInput")) else None
+
         checkpoint = dispatch_agent(agent, input_context)
-        
+
         if checkpoint is None:
             print(f"\n❌ Workflow failed at agent {agent_id}")
             return None
-        
-        # Save checkpoint for next iteration
-        output = checkpoint
-        print(f"\n📋 Checkpoint saved:")
-        print(f"   Output type: {output.get('type', 'unknown')}")
-        print(f"   Confidence: {output.get('confidence', 0):.2f}")
-        
-        # Wait for next agent if defined
-        if next_agent and i < len(agents) - 1:
-            next_agent_id = next_agent[0]
-            print(f"\n⏭️  Handoff to next agent: {next_agent_id}")
-            checkpoint = wait_for_checkpoint(next_agent_id, timeout=120, poll_interval=5)
-            if checkpoint is None:
-                print(f"❌ Next agent ({next_agent_id}) timed out")
-                return None
-            input_context = checkpoint
-            output = None  # Next iteration will handle this
-    
+
+        last_checkpoint = checkpoint
+        print(f"\n📋 Checkpoint from {agent_id}:")
+        print(f"   Agent: {last_checkpoint.get('agent', agent_id)}")
+        print(f"   Status: {last_checkpoint.get('status', 'unknown')}")
+        print(f"   Confidence: {last_checkpoint.get('confidence', 0):.2f}")
+        next_up = agent.get("handoffsTo", [])
+        if next_up:
+            print(f"   Next: {next_up[0]}")
+
     print("\n" + "="*60)
     print("✅ Workflow completed successfully!")
     print("="*60)
-    
-    return output
+
+    return last_checkpoint
 
 if __name__ == "__main__":
     import sys
