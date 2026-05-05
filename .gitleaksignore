@@ -1,24 +1,26 @@
 # Gitleaks Ignore Rules for Travel Agents
-# https://github.com/gitleaks/gitleaks
+# https://gitleaks.github.io
 
-# Allowlist for common patterns that aren't secrets
+# Ignore config files with template patterns
+ignorepath = ".gitleaks.*"
+ignorepath = ".gitignore"
+ignorepath = "CLAUDE.md"
+ignorepath = "ARCHITECTURE.md"
+ignorepath = "IMPLEMENTATION_SUMMARY.md"
+ignorepath = "PROJECT.md"
+ignorepath = "QUICK*.md"
+ignorepath = "SETUP*.md"
+ignorepath = "VERSION.md"
+ignorepath = "LICENSE"
 
-# Allow specific commits that intentionally contain patterns
-ignore_keyword = "TODO"
+# Ignore common file patterns
+ignoreregex = '\.md$'
+ignoreregex = '\.example\..*$'
+ignoreregex = '\.sample\..*$'
 
-# Ignore common API key patterns that appear in documentation
-ignore_keyword = "example"
-ignore_keyword = "demo"
-ignore_keyword = "placeholder"
-
-# Ignore config files with comment patterns
-ignore_path_regex = '.*\\.md$'
-ignore_path_regex = '.*\\.example\\..*$'
-ignore_path_regex = '.*\\.sample\\..*$'
-
-# Ignore old commits from initial setup
-ignore_globs = ['**/node_modules/**']
-ignore_globs = ['**/vendor/**']
-ignore_globs = ['**/test/**']
-ignore_globs = ['**/tests/**']
-ignore_globs = ['.git/**']
+# Ignore vendor directories  
+ignoreglob = "**/node_modules/**"
+ignoreglob = "**/vendor/**"
+ignoreglob = "**/test/**"
+ignoreglob = "**/tests/**"
+ignoreglob = ".git/**"
